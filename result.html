@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 검사 결과</title>
+    <title>나의 과일 유형은?</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>나의 MBTI 유형은?</h1>
-        <h2 id="mbti-type"></h2>
-        <p id="mbti-description"></p>
-        <button id="share-btn" class="btn">결과 공유하기</button>
-        <button id="kakao-share-btn" class="btn">카카오톡으로 공유</button>
-        <p id="share-link-display" style="display: none; margin-top: 20px;">
-            공유 링크: <input type="text" id="share-link-input" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-            <button id="copy-btn" class="btn" style="margin-left: 10px;">복사</button>
+        <h1>나의 과일 유형은?</h1>
+        <h2 id="fruit-name"></h2>
+        <p id="fruit-description"></p>
+
+        <div class="result-buttons">
+            <button id="share-btn" class="btn">결과 링크 복사</button>
+            <button id="kakao-share-btn" class="btn">카카오톡으로 공유</button>
+            <a href="index.html" class="btn home-btn">다시 검사하기</a>
+        </div>
+
+        <p id="share-link-display" class="share-link-container" style="display: none;">
+            공유 링크: <input type="text" id="share-link-input" readonly>
+            <button id="copy-btn" class="btn">복사</button>
         </p>
-        <a href="index.html" class="btn home-btn">다시 검사하기</a>
     </div>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="script.js"></script>
