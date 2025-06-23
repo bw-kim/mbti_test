@@ -1,59 +1,59 @@
 // index.html과 result.html 모두에서 사용될 수 있도록 전역 스코프에 정의
 const questions = [
     {
-        question: "주말에 무엇을 하시나요?",
+        question: "영화 '어벤져스: 엔드게임'에서, 타노스가 모든 인구를 절반으로 줄이는 '핑거 스냅'을 실행합니다. 이 상황을 접한 당신의 첫 번째 반응은?",
         options: [
-            { text: "친구들과 파티에 갑니다.", type: "E" },
-            { text: "집에서 혼자 영화를 봅니다.", type: "I" }
+            { text: "분노에 차서 복수를 다짐하며, 모두를 모아 당장이라도 타노스에게 달려갈 계획을 세운다.", type: "E" },
+            { text: "충격에 빠져 혼자 조용히 생각에 잠긴다. 이 상황의 원인과 결과를 심도 깊게 분석하고 싶다.", type: "I" }
         ]
     },
     {
-        question: "새로운 프로젝트를 시작할 때?",
+        question: "영화 '인터스텔라'에서, 인류의 생존을 위해 새로운 행성을 찾아 떠나야 하는 절체절명의 순간입니다. 당신은 어떤 정보를 가장 중요하게 생각하나요?",
         options: [
-            { text: "큰 그림을 먼저 그립니다.", type: "N" },
-            { text: "구체적인 세부사항부터 계획합니다.", type: "S" }
+            { text: "새로운 행성에서 펼쳐질 미지의 가능성, 인류가 어떤 방식으로 진화할지에 대한 큰 그림을 상상한다.", type: "N" },
+            { text: "새로운 행성의 정확한 환경 데이터, 생존을 위한 구체적인 자원 확보 계획 등 현실적인 정보에 집중한다.", type: "S" }
         ]
     },
     {
-        question: "어려운 결정을 내려야 할 때?",
+        question: "영화 '다크 나이트'에서, 조커가 무고한 시민과 병원 환자 중 누구를 폭파시킬지 선택하라고 합니다. 당신이라면 이 상황을 어떻게 대처하겠습니까?",
         options: [
-            { text: "논리적이고 객관적으로 판단합니다.", type: "T" },
-            { text: "사람들의 감정을 고려합니다.", type: "F" }
+            { text: "데이터와 논리를 바탕으로 피해를 최소화할 수 있는 가장 합리적인 해결책을 찾으려 한다.", type: "T" },
+            { text: "사람들의 공포와 절망을 느끼며, 최대한 많은 생명을 구하기 위한 도덕적이고 감정적인 결정을 내리려 한다.", type: "F" }
         ]
     },
     {
-        question: "여행 계획을 세울 때?",
+        question: "영화 '반지의 제왕'에서, 반지를 파괴하기 위한 여정이 계획대로 흘러가지 않습니다. 예기치 못한 난관에 부딪혔을 때 당신은?",
         options: [
-            { text: "즉흥적으로 떠납니다.", type: "P" },
-            { text: "세부 계획을 꼼꼼히 세웁니다.", type: "J" }
+            { text: "원래 계획을 고수하며, 발생한 문제들을 빠르게 분석하고 즉시 대안을 마련하여 계획대로 진행하려 한다.", type: "J" },
+            { text: "계획에 얽매이지 않고, 현재 상황에 맞춰 유연하게 대처하며 새로운 길을 모색한다. 즉흥적인 판단이 필요하다.", type: "P" }
         ]
     },
     {
-        question: "새로운 사람을 만날 때?",
+        question: "영화 '매트릭스'에서, 빨간 약과 파란 약 중 하나를 선택해야 합니다. 당신의 선택은?",
         options: [
-            { text: "먼저 다가가 말을 겁니다.", type: "E" },
-            { text: "상대방이 다가오길 기다립니다.", type: "I" }
+            { text: "빨간 약을 선택하고 진실을 마주한다. 비록 고통스러울지라도, 숨겨진 현실을 파헤치고 싶다.", type: "N" },
+            { text: "파란 약을 선택하고 평화로운 환상에 머무른다. 복잡한 진실보다는 안정적인 현실을 선호한다.", type: "S" }
         ]
     },
     {
-        question: "업무를 할 때?",
+        question: "영화 '스타워즈'에서, 당신은 제국의 스톰트루퍼 대장입니다. 부하가 실수로 중요한 정보를 적에게 넘겼습니다. 당신의 반응은?",
         options: [
-            { text: "미래의 가능성과 아이디어에 집중합니다.", type: "N" },
-            { text: "현재 사실과 실제 적용에 집중합니다.", type: "S" }
+            { text: "규정과 원칙에 따라 부하의 잘못을 엄격히 처벌하고, 재발 방지 대책을 강구한다.", type: "T" },
+            { text: "부하의 사정을 듣고 그의 실수로 인한 상실감을 헤아려준다. 함께 해결책을 모색하며 격려한다.", type: "F" }
         ]
     },
     {
-        question: "칭찬을 들었을 때?",
+        question: "영화 '해리 포터'에서, 호그와트의 한 학년이 시작되었습니다. 당신은 새로운 친구들을 사귀기 위해 어떻게 행동하나요?",
         options: [
-            { text: "그것이 사실인지 합리적으로 분석합니다.", type: "T" },
-            { text: "칭찬해 준 사람의 의도와 마음에 감사함을 느낍니다.", type: "F" }
+            { text: "적극적으로 다가가 말을 걸고, 먼저 자신의 이야기를 공유하며 친해지려 한다.", type: "E" },
+            { text: "조용히 주변을 관찰하며, 나와 관심사가 맞는 친구들이 먼저 다가와 주기를 기다린다.", type: "I" }
         ]
     },
     {
-        question: "일을 마칠 때?",
+        question: "영화 '캡틴 아메리카: 시빌 워'에서, 어벤져스 팀원들 간의 갈등이 최고조에 달했습니다. 당신은 이 갈등을 어떻게 해결하려 하나요?",
         options: [
-            { text: "일단 끝내고 다른 일을 시작합니다.", type: "J" },
-            { text: "상황에 따라 유연하게 변경할 여지를 둡니다.", type: "P" }
+            { text: "명확한 원칙과 규칙을 세워 갈등을 중재하고, 팀원들이 이에 따르도록 강하게 이끌어간다.", type: "J" },
+            { text: "각자의 입장을 충분히 듣고 이해하며, 상황에 따라 유연하게 타협점을 찾아 갈등을 완화하려 한다.", type: "P" }
         ]
     }
 ];
@@ -102,7 +102,7 @@ const villainMbtiTypes = {
     },
     "ENFP": {
         villainName: "혼돈을 선사하는 유쾌한 악당, '배트맨'의 펭귄 (팀 버튼)",
-        villrainDescription: "기이하고 독창적인 방식으로 세상의 이목을 끌며 혼돈을 즐기는 당신은 펭귄처럼 개성 강한 빌런입니다. 재치와 기발함으로 상대를 혼란에 빠뜨리며, 자신만의 세계를 구축합니다."
+        villainDescription: "기이하고 독창적인 방식으로 세상의 이목을 끌며 혼돈을 즐기는 당신은 펭귄처럼 개성 강한 빌런입니다. 재치와 기발함으로 상대를 혼란에 빠뜨리며, 자신만의 세계를 구축합니다."
     },
     "ENTP": {
         villainName: "논리적 허점을 파고드는 파괴자, '매트릭스'의 스미스 요원",
@@ -133,6 +133,7 @@ if (document.getElementById('quiz-container')) {
     // 각 질문에 대한 사용자의 선택을 저장 (뒤로 가기 기능용)
     // 예: [{ questionIndex: 0, selectedType: 'E' }, { questionIndex: 1, selectedType: 'N' }]
     const userSelections = [];
+    // MBTI 최종 결과 계산을 위한 각 유형별 합계
     const answers = { E: 0, I: 0, N: 0, S: 0, T: 0, F: 0, J: 0, P: 0 };
 
     const startQuizButton = document.getElementById('start-quiz-btn');
@@ -151,36 +152,40 @@ if (document.getElementById('quiz-container')) {
                 </div>
             `;
             const optionButtons = quizContainer.querySelectorAll('.options button');
-            optionButtons.forEach(button => {
-                // 이전에 선택했던 옵션이 있다면 'selected' 클래스 추가
-                const previousSelection = userSelections[currentQuestionIndex];
-                if (previousSelection && previousSelection.selectedType === button.dataset.type) {
-                    button.classList.add('selected');
-                }
 
+            // '뒤로 가기' 시 선택지 초기화 로직
+            // 현재 문항에 대한 이전에 저장된 선택이 있다면 'selected' 클래스를 제거합니다.
+            const previousSelection = userSelections[currentQuestionIndex];
+            if (previousSelection) {
+                // 이전 선택에 대한 카운트 값을 미리 제거해줍니다.
+                answers[previousSelection.selectedType]--;
+                userSelections[currentQuestionIndex] = null; // 해당 문항 선택 정보 초기화
+            }
+            // 모든 버튼에서 'selected' 클래스 제거
+            optionButtons.forEach(btn => btn.classList.remove('selected'));
+
+
+            optionButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                    // 모든 버튼에서 'selected' 클래스 제거 후 현재 선택된 버튼에 추가
+                    // 모든 버튼에서 'selected' 클래스 제거 후 현재 선택된 버튼에 추가 (시각적 피드백)
                     optionButtons.forEach(btn => btn.classList.remove('selected'));
                     e.target.classList.add('selected');
 
                     const selectedType = e.target.dataset.type;
 
-                    // 이전 선택이 있다면 해당 유형의 카운트 감소
-                    if (userSelections[currentQuestionIndex]) {
-                        answers[userSelections[currentQuestionIndex].selectedType]--;
-                    }
-
                     // 현재 선택된 유형의 카운트 증가
                     answers[selectedType]++;
 
-                    // 사용자 선택 정보 저장 또는 업데이트
+                    // 사용자 선택 정보 저장
                     userSelections[currentQuestionIndex] = {
                         questionIndex: currentQuestionIndex,
                         selectedType: selectedType
                     };
 
-                    // 다음 질문으로 즉시 이동
-                    goToNextQuestion();
+                    // 다음 질문으로 즉시 이동 (클릭 후 잠시 딜레이를 주어 시각적 확인 가능)
+                    setTimeout(() => {
+                        goToNextQuestion();
+                    }, 300); // 0.3초 후 다음 질문으로 이동
                 });
             });
 
@@ -204,6 +209,7 @@ if (document.getElementById('quiz-container')) {
 
     function goToPreviousQuestion() {
         if (currentQuestionIndex > 0) {
+            // 현재 화면의 선택된 상태를 초기화하고 이전 문항으로 이동 (displayQuestion에서 처리됨)
             currentQuestionIndex--;
             displayQuestion();
         }

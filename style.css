@@ -104,17 +104,18 @@ p {
     background-color: #DA190B;
 }
 
-/* 뒤로 가기 버튼은 다음/결과 보기 버튼과 동일한 스타일 적용 (새로 추가) */
+/* 뒤로 가기 버튼 스타일 */
 #back-btn {
-    width: 80%;
+    width: 80%; /* 다른 버튼과 일관되게 */
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    display: block; /* 중앙 정렬 */
     margin-top: 30px;
     font-size: 1.3em;
     padding: 18px 0;
     background-color: #6c757d; /* 회색 계열로 변경 */
+    color: white; /* 텍스트 색상 */
 }
 
 #back-btn:hover {
