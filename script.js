@@ -210,20 +210,26 @@ if (document.getElementById('quiz-container')) {
 
 // result.html에서 실행되는 코드
 if (document.getElementById('mbti-type')) {
+    // Kakao SDK 초기화
+    Kakao.init('e748b5d17d231ca36365d1c6498e8327'); // 여기에 카카오 자바스크립트 키를 넣어주세요
+
     const urlParams = new URLSearchParams(window.location.search);
     const mbti = urlParams.get('mbti');
 
     const mbtiTypeElement = document.getElementById('mbti-type');
     const mbtiDescriptionElement = document.getElementById('mbti-description');
     const shareButton = document.getElementById('share-btn');
+    const kakaoShareButton = document.getElementById('kakao-share-btn'); // Kakao 공유 버튼
     const shareLinkDisplay = document.getElementById('share-link-display');
     const shareLinkInput = document.getElementById('share-link-input');
     const copyButton = document.getElementById('copy-btn');
 
+    let currentMbtiTypeInfo = null; // 현재 MBTI 정보를 저장할 변수
+
     if (mbti && mbtiTypes[mbti]) {
-        const typeInfo = mbtiTypes[mbti];
-        mbtiTypeElement.textContent = `${mbti} - ${typeInfo.name}`;
-        mbtiDescriptionElement.textContent = typeInfo.description;
+        currentMbtiTypeInfo = mbtiTypes[mbti];
+        mbtiTypeElement.textContent = `${mbti} - ${currentMbtiTypeInfo.name}`;
+        mbtiDescriptionElement.textContent = currentMbtiTypeInfo.description;
     } else {
         mbtiTypeElement.textContent = "MBTI 유형을 찾을 수 없습니다.";
         mbtiDescriptionElement.textContent = "다시 검사를 진행해주세요.";
@@ -248,6 +254,36 @@ if (document.getElementById('mbti-type')) {
         } catch (err) {
             console.error('클립보드 복사 실패:', err);
             alert('링크 복사에 실패했습니다. 직접 복사해주세요.');
+        }
+    });
+
+    // Kakao 공유 버튼 클릭 이벤트
+    kakaoShareButton.addEventListener('click', () => {
+        if (currentMbtiTypeInfo) {
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `나의 MBTI 유형은 ${mbti} - ${currentMbtiTypeInfo.name}!`,
+                    description: currentMbtiTypeInfo.description,
+                    imageUrl:
+                        'https://via.placeholder.com/300x200', // 여기에 실제 서비스의 대표 이미지 URL을 넣어주세요.
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    },
+                },
+                buttons: [
+                    {
+                        title: 'MBTI 결과 확인하기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                ],
+            });
+        } else {
+            alert('MBTI 결과가 없어 카카오톡으로 공유할 수 없습니다.');
         }
     });
 }
