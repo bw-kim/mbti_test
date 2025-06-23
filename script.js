@@ -1,222 +1,253 @@
+// index.html과 result.html 모두에서 사용될 수 있도록 전역 스코프에 정의
 const questions = [
     {
-        question: "주말에 무엇을 하고 싶나요?",
+        question: "주말에 무엇을 하시나요?",
         options: [
-            { text: "친구들과 파티에서 신나게 놀고 싶어요.", value: "E" },
-            { text: "집에서 조용히 책을 읽거나 영화를 보고 싶어요.", value: "I" }
+            { text: "친구들과 파티에 갑니다.", type: "E" },
+            { text: "집에서 혼자 영화를 봅니다.", type: "I" }
         ]
     },
     {
-        question: "새로운 프로젝트를 시작할 때, 당신은 주로 어디에 집중하나요?",
+        question: "새로운 프로젝트를 시작할 때?",
         options: [
-            { text: "전체적인 그림과 미래의 가능성을 봅니다.", value: "N" },
-            { text: "현실적인 세부 사항과 실용적인 방법을 봅니다.", value: "S" }
+            { text: "큰 그림을 먼저 그립니다.", type: "N" },
+            { text: "구체적인 세부사항부터 계획합니다.", type: "S" }
         ]
     },
     {
-        question: "친구가 고민을 털어놓을 때, 당신의 반응은?",
+        question: "어려운 결정을 내려야 할 때?",
         options: [
-            { text: "친구의 감정에 공감하고 위로해 줍니다.", value: "F" },
-            { text: "논리적으로 문제 해결 방법을 제시해 줍니다.", value: "T" }
+            { text: "논리적이고 객관적으로 판단합니다.", type: "T" },
+            { text: "사람들의 감정을 고려합니다.", type: "F" }
         ]
     },
     {
-        question: "계획을 세울 때, 당신은 어떤 편인가요?",
+        question: "여행 계획을 세울 때?",
         options: [
-            { text: "계획을 세우고 그에 따라 움직이는 것을 선호합니다.", value: "J" },
-            { text: "자유롭게 상황에 따라 유연하게 대처하는 것을 선호합니다.", value: "P" }
+            { text: "즉흥적으로 떠납니다.", type: "P" },
+            { text: "세부 계획을 꼼꼼히 세웁니다.", type: "J" }
+        ]
+    },
+    {
+        question: "새로운 사람을 만날 때?",
+        options: [
+            { text: "먼저 다가가 말을 겁니다.", type: "E" },
+            { text: "상대방이 다가오길 기다립니다.", type: "I" }
+        ]
+    },
+    {
+        question: "업무를 할 때?",
+        options: [
+            { text: "미래의 가능성과 아이디어에 집중합니다.", type: "N" },
+            { text: "현재 사실과 실제 적용에 집중합니다.", type: "S" }
+        ]
+    },
+    {
+        question: "칭찬을 들었을 때?",
+        options: [
+            { text: "그것이 사실인지 합리적으로 분석합니다.", type: "T" },
+            { text: "칭찬해 준 사람의 의도와 마음에 감사함을 느낍니다.", type: "F" }
+        ]
+    },
+    {
+        question: "일을 마칠 때?",
+        options: [
+            { text: "일단 끝내고 다른 일을 시작합니다.", type: "J" },
+            { text: "상황에 따라 유연하게 변경할 여지를 둡니다.", type: "P" }
         ]
     }
 ];
 
-const quizContainer = document.getElementById('quiz-container');
-const startButton = document.getElementById('start-button');
-const submitButton = document.getElementById('submit-button');
-const resultContainer = document.getElementById('result-container');
-const mbtiResult = document.getElementById('mbti-result');
-const mbtiDescription = document.getElementById('mbti-description');
-const shareButton = document.getElementById('share-button');
-
-let answers = {
-    E: 0, I: 0,
-    N: 0, S: 0,
-    F: 0, T: 0,
-    J: 0, P: 0
+const mbtiTypes = {
+    "ISTJ": {
+        name: "세상의 소금형",
+        description: "청렴결백한 논리주의자, 현실적이고 책임감이 강하며 신뢰할 수 있습니다."
+    },
+    "ISFJ": {
+        name: "용감한 수호자",
+        description: "사려 깊고 헌신적인 성격으로 주변 사람들을 잘 챙깁니다."
+    },
+    "INFJ": {
+        name: "선의의 옹호자",
+        description: "통찰력과 영감을 가진 이상주의자, 조용하지만 강한 영향력을 가집니다."
+    },
+    "INTJ": {
+        name: "전략가",
+        description: "독립적이고 혁신적인 사고를 가진 전략가, 장기적인 계획에 능숙합니다."
+    },
+    "ISTP": {
+        name: "만능 재주꾼",
+        description: "호기심 많고 실용적인 문제 해결사, 기계나 도구를 다루는 데 능숙합니다."
+    },
+    "ISFP": {
+        name: "자유로운 영혼",
+        description: "예술적이고 유연하며 겸손한 성격, 아름다움을 추구합니다."
+    },
+    "INFP": {
+        name: "열정적인 중재자",
+        description: "이상적이고 창의적이며 온화한 성격, 자신의 가치를 중요하게 생각합니다."
+    },
+    "INTP": {
+        name: "논리적인 사색가",
+        description: "지적이고 분석적이며 독창적인 사고방식을 가졌습니다."
+    },
+    "ESTP": {
+        name: "모험을 즐기는 사업가",
+        description: "활동적이고 즉흥적이며 현실적인 문제 해결에 능합니다."
+    },
+    "ESFP": {
+        name: "자유로운 영혼의 연예인",
+        description: "재미있고 에너지가 넘치며 사교적입니다."
+    },
+    "ENFP": {
+        name: "재기발랄한 활동가",
+        description: "열정적이고 창의적이며 사회성이 뛰어납니다."
+    },
+    "ENTP": {
+        name: "논쟁을 즐기는 변론가",
+        description: "똑똑하고 호기심 많으며 논리적인 토론을 즐깁니다."
+    },
+    "ESTJ": {
+        name: "엄격한 관리자",
+        description: "현실적이고 체계적이며 리더십이 뛰어납니다."
+    },
+    "ESFJ": {
+        name: "사교적인 외교관",
+        description: "사교적이고 친절하며 주변 사람들을 잘 돕습니다."
+    },
+    "ENFJ": {
+        name: "정의로운 사회 운동가",
+        description: "카리스마 있고 영감을 주며 타인의 성장을 돕습니다."
+    },
+    "ENTJ": {
+        name: "대담한 통솔자",
+        description: "논리적이고 단호하며 탁월한 리더십을 발휘합니다."
+    }
 };
 
-const mbtiDescriptions = {
-    ESTJ: "현실적, 활동적, 실용적, 사실적이며 행정적인 재능이 뛰어남. 체계적, 계획적이며 목표지향적이다.",
-    ESTP: "현실적, 즉흥적, 활동적, 모험적이며 적응력이 뛰어나다. 관찰력이 뛰어나고 문제 해결에 능하다.",
-    ESFJ: "사교적, 친화적, 활동적, 협조적이며 동정심이 많다. 타인에게 관심이 많고 도움을 주는 것을 좋아한다.",
-    ESFP: "사교적, 명랑, 활동적, 즉흥적이며 현재를 즐긴다. 재치 있고 사람들과 어울리는 것을 좋아한다.",
-    ENTJ: "논리적, 분석적, 합리적, 계획적이며 리더십이 강하다. 비전을 제시하고 목표 달성을 위해 노력한다.",
-    ENTP: "논리적, 분석적, 창의적, 즉흥적이며 새로운 아이디어에 흥미가 많다. 토론과 논쟁을 즐긴다.",
-    ENFJ: "사교적, 이상적, 열정적, 설득력 있으며 타인의 성장을 돕는 것을 좋아한다. 공감 능력이 뛰어나다.",
-    ENFP: "사교적, 창의적, 열정적, 즉흥적이며 새로운 가능성을 탐색한다. 호기심이 많고 자유로운 영혼이다.",
-    ISTJ: "현실적, 책임감, 신중, 계획적이며 꼼꼼하고 정확하다. 전통과 규칙을 중시하며 신뢰할 수 있다.",
-    ISTP: "현실적, 논리적, 분석적, 즉흥적이며 손재주가 좋다. 독립적이며 문제 해결에 능하다.",
-    ISFJ: "친절, 책임감, 신중, 조용하며 타인을 돕는 것을 좋아한다. 성실하고 세심하며 기억력이 좋다.",
-    ISFP: "조용, 온화, 예술적, 즉흥적이며 미적 감각이 뛰어나다. 자연과 예술을 사랑하며 자유를 추구한다.",
-    INTJ: "논리적, 분석적, 독립적, 계획적이며 비판적 사고력이 뛰어나다. 복잡한 문제를 해결하는 것을 즐긴다.",
-    INTP: "논리적, 분석적, 추상적, 탐구적이며 지적 호기심이 많다. 독창적이고 새로운 이론에 관심이 많다.",
-    INFJ: "이상적, 통찰력, 이해심, 사명감 있으며 타인의 성장을 돕는 것을 좋아한다. 깊이 있는 관계를 추구한다.",
-    INFP: "이상적, 공감, 창의적, 유연하며 타인의 가치를 존중한다. 내면의 세계가 풍부하고 상상력이 풍부하다."
-};
 
+// index.html에서 실행되는 코드
+if (document.getElementById('quiz-container')) {
+    let currentQuestionIndex = 0;
+    const answers = { E: 0, I: 0, N: 0, S: 0, T: 0, F: 0, J: 0, P: 0 };
+    let selectedOptionType = null; // 현재 질문에서 선택된 옵션의 유형을 저장
 
-function renderQuestions() {
-    quizContainer.innerHTML = ''; // 기존 질문 삭제
-    questions.forEach((q, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question');
-        questionDiv.innerHTML = `
-            <p>${index + 1}. ${q.question}</p>
-            <div class="options">
-                ${q.options.map(option => `
-                    <label>
-                        <input type="radio" name="q${index}" value="${option.value}">
-                        ${option.text}
-                    </label>
-                `).join('')}
-            </div>
-        `;
-        quizContainer.appendChild(questionDiv);
+    const startQuizButton = document.getElementById('start-quiz-btn'); // 추가된 시작 버튼
+    const quizContainer = document.getElementById('quiz-container');
+    const nextButton = document.getElementById('next-btn');
+    const submitButton = document.getElementById('submit-btn');
+
+    function displayQuestion() {
+        if (currentQuestionIndex < questions.length) {
+            const q = questions[currentQuestionIndex];
+            quizContainer.innerHTML = `
+                <div class="question">${q.question}</div>
+                <div class="options">
+                    ${q.options.map((option, index) =>
+                        `<button data-type="${option.type}">${option.text}</button>`
+                    ).join('')}
+                </div>
+            `;
+            const optionButtons = quizContainer.querySelectorAll('.options button');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    optionButtons.forEach(btn => btn.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    selectedOptionType = e.target.dataset.type; // 선택된 유형 저장
+                    if (currentQuestionIndex < questions.length - 1) {
+                        nextButton.style.display = 'block';
+                        submitButton.style.display = 'none';
+                    } else {
+                        nextButton.style.display = 'none';
+                        submitButton.style.display = 'block';
+                    }
+                });
+            });
+            nextButton.style.display = 'none'; // 다음 버튼 초기화
+            submitButton.style.display = 'none'; // 제출 버튼 초기화
+            selectedOptionType = null; // 선택된 옵션 초기화
+        } else {
+            // 모든 질문 완료 (이 부분은 submit-btn이 처리하므로 사실상 도달하지 않음)
+        }
+    }
+
+    function goToNextQuestion() {
+        if (selectedOptionType) {
+            answers[selectedOptionType]++; // 선택된 유형의 카운트 증가
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+            } else {
+                calculateResultAndRedirect();
+            }
+        } else {
+            alert("답변을 선택해주세요!");
+        }
+    }
+
+    function calculateResultAndRedirect() {
+        let mbti = "";
+        mbti += (answers.E >= answers.I) ? "E" : "I";
+        mbti += (answers.N >= answers.S) ? "N" : "S";
+        mbti += (answers.T >= answers.F) ? "T" : "F";
+        mbti += (answers.J >= answers.P) ? "J" : "P";
+
+        // 결과 페이지로 리디렉션하며 MBTI 유형을 URL 매개변수로 전달
+        window.location.href = `result.html?mbti=${mbti}`;
+    }
+
+    nextButton.addEventListener('click', goToNextQuestion);
+    submitButton.addEventListener('click', calculateResultAndRedirect);
+
+    // START 버튼 클릭 시 동작 추가
+    startQuizButton.addEventListener('click', () => {
+        startQuizButton.style.display = 'none'; // 시작 버튼 숨기기
+        quizContainer.style.display = 'block'; // 퀴즈 컨테이너 보이기
+        displayQuestion(); // 첫 질문 로드
     });
 }
 
-function calculateMBTI() {
-    answers = { E: 0, I: 0, N: 0, S: 0, F: 0, T: 0, J: 0, P: 0 }; // 초기화
-    let allAnswered = true;
 
-    questions.forEach((q, index) => {
-        const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
-        if (selectedOption) {
-            answers[selectedOption.value]++;
-        } else {
-            allAnswered = false;
+// result.html에서 실행되는 코드
+if (document.getElementById('mbti-type')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mbti = urlParams.get('mbti');
+
+    const mbtiTypeElement = document.getElementById('mbti-type');
+    const mbtiDescriptionElement = document.getElementById('mbti-description');
+    const shareButton = document.getElementById('share-btn');
+    const shareLinkDisplay = document.getElementById('share-link-display');
+    const shareLinkInput = document.getElementById('share-link-input');
+    const copyButton = document.getElementById('copy-btn');
+
+    if (mbti && mbtiTypes[mbti]) {
+        const typeInfo = mbtiTypes[mbti];
+        mbtiTypeElement.textContent = `${mbti} - ${typeInfo.name}`;
+        mbtiDescriptionElement.textContent = typeInfo.description;
+    } else {
+        mbtiTypeElement.textContent = "MBTI 유형을 찾을 수 없습니다.";
+        mbtiDescriptionElement.textContent = "다시 검사를 진행해주세요.";
+    }
+
+    shareButton.addEventListener('click', () => {
+        const shareUrl = window.location.origin + `/result.html?mbti=${mbti}`; // 현재 도메인과 쿼리 파라미터 조합
+        shareLinkInput.value = shareUrl;
+        shareLinkDisplay.style.display = 'block';
+
+        // 자동으로 링크를 선택 (모바일에서는 작동하지 않을 수 있음)
+        shareLinkInput.select();
+        shareLinkInput.setSelectionRange(0, 99999); // 모바일용
+    });
+
+    copyButton.addEventListener('click', () => {
+        shareLinkInput.select();
+        shareLinkInput.setSelectionRange(0, 99999); // 모바일용
+        try {
+            document.execCommand('copy');
+            alert('링크가 클립보드에 복사되었습니다!');
+        } catch (err) {
+            console.error('클립보드 복사 실패:', err);
+            alert('링크 복사에 실패했습니다. 직접 복사해주세요.');
         }
     });
-
-    if (!allAnswered) {
-        alert('모든 질문에 답해주세요!');
-        return null;
-    }
-
-    let mbti = "";
-    mbti += (answers.E > answers.I) ? "E" : "I";
-    mbti += (answers.N > answers.S) ? "N" : "S";
-    mbti += (answers.F > answers.T) ? "F" : "T";
-    mbti += (answers.J > answers.P) ? "J" : "P";
-
-    return mbti;
 }
-
-startButton.addEventListener('click', () => {
-    startButton.style.display = 'none';
-    submitButton.style.display = 'block';
-    renderQuestions();
-});
-
-submitButton.addEventListener('click', () => {
-    const calculatedMBTI = calculateMBTI();
-    if (calculatedMBTI) {
-        quizContainer.style.display = 'none';
-        submitButton.style.display = 'none';
-        resultContainer.style.display = 'block';
-        mbtiResult.textContent = calculatedMBTI;
-        mbtiDescription.textContent = mbtiDescriptions[calculatedMBTI] || "MBTI 결과에 대한 설명이 없습니다.";
-    }const questions = [
-    // 외향(E) vs 내향(I) 지표
-    {
-        question: "주말에 무엇을 하고 싶나요?",
-        options: [
-            { text: "친구들과 파티에서 신나게 놀고 싶어요.", value: "E" },
-            { text: "집에서 조용히 책을 읽거나 영화를 보고 싶어요.", value: "I" }
-        ]
-    },
-    {
-        question: "새로운 사람들과 만날 때, 당신은?",
-        options: [
-            { text: "에너지를 얻고 활기를 느낍니다.", value: "E" },
-            { text: "에너지를 소모하고 피곤함을 느낍니다.", value: "I" }
-        ]
-    },
-    {
-        question: "회의나 그룹 토론에서 당신은?",
-        options: [
-            { text: "주도적으로 의견을 내고 발표하는 것을 좋아합니다.", value: "E" },
-            { text: "다른 사람의 의견을 듣고 신중하게 생각한 후 말하는 편입니다.", value: "I" }
-        ]
-    },
-
-    // 감각(S) vs 직관(N) 지표
-    {
-        question: "새로운 프로젝트를 시작할 때, 당신은 주로 어디에 집중하나요?",
-        options: [
-            { text: "현실적인 세부 사항과 실용적인 방법을 봅니다.", value: "S" },
-            { text: "전체적인 그림과 미래의 가능성을 봅니다.", value: "N" }
-        ]
-    },
-    {
-        question: "이야기를 들을 때, 당신은?",
-        options: [
-            { text: "구체적인 사실과 경험을 중요하게 생각합니다.", value: "S" },
-            { text: "숨겨진 의미나 상징, 가능성을 찾으려고 합니다.", value: "N" }
-        ]
-    },
-    {
-        question: "문제를 해결할 때, 당신은?",
-        options: [
-            { text: "과거의 경험이나 현재의 데이터에 기반하여 해결책을 찾습니다.", value: "S" },
-            { text: "직관과 통찰력을 활용하여 새로운 접근 방식을 시도합니다.", value: "N" }
-        ]
-    },
-
-    // 사고(T) vs 감정(F) 지표
-    {
-        question: "친구가 고민을 털어놓을 때, 당신의 반응은?",
-        options: [
-            { text: "논리적으로 문제 해결 방법을 제시해 줍니다.", value: "T" },
-            { text: "친구의 감정에 공감하고 위로해 줍니다.", value: "F" }
-        ]
-    },
-    {
-        question: "어떤 결정을 내릴 때, 당신은 주로 무엇을 고려하나요?",
-        options: [
-            { text: "객관적인 사실과 논리적 타당성.", value: "T" },
-            { text: "개인의 가치, 사람들과의 관계, 조화.", value: "F" }
-        ]
-    },
-    {
-        question: "비판을 받았을 때, 당신은?",
-        options: [
-            { text: "그 비판이 논리적으로 맞는지 분석하려고 합니다.", value: "T" },
-            { text: "비판하는 사람의 의도나 감정에 더 신경이 쓰입니다.", value: "F" }
-        ]
-    },
-
-    // 판단(J) vs 인식(P) 지표
-    {
-        question: "계획을 세울 때, 당신은 어떤 편인가요?",
-        options: [
-            { text: "계획을 세우고 그에 따라 움직이는 것을 선호합니다.", value: "J" },
-            { text: "자유롭게 상황에 따라 유연하게 대처하는 것을 선호합니다.", value: "P" }
-        ]
-    },
-    {
-        question: "여행을 계획할 때, 당신은?",
-        options: [
-            { text: "구체적인 일정을 미리 세우고 계획대로 따릅니다.", value: "J" },
-            { text: "대략적인 방향만 정하고 즉흥적으로 탐험하는 것을 즐깁니다.", value: "P" }
-        ]
-    },
-    {
-        question: "마감 기한이 다가올 때, 당신은?",
-        options: [
-            { text: "미리미리 준비하여 마감일 전에 끝내는 편입니다.", value: "J" },
-            { text: "마감 기한이 임박해서야 본격적으로 시작하는 편입니다.", value: "P" }
-        ]
-    }
-];
-
-// ... (이후의 mbtiDescriptions 객체와 모든 함수 코드는 동일합니다) ...
