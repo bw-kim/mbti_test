@@ -154,6 +154,7 @@ if (document.getElementById('quiz-container')) {
                     optionButtons.forEach(btn => btn.classList.remove('selected'));
                     e.target.classList.add('selected');
                     selectedOptionType = e.target.dataset.type; // 선택된 유형 저장
+                    // 옵션 선택 시 다음 또는 결과 보기 버튼 표시
                     if (currentQuestionIndex < questions.length - 1) {
                         nextButton.style.display = 'block';
                         submitButton.style.display = 'none';
@@ -265,8 +266,10 @@ if (document.getElementById('mbti-type')) {
                 content: {
                     title: `나의 MBTI 유형은 ${mbti} - ${currentMbtiTypeInfo.name}!`,
                     description: currentMbtiTypeInfo.description,
+                    // TODO: 여기에 실제 서비스의 대표 이미지 URL을 넣어주세요.
+                    // 예시 이미지 URL: 'https://cdn.pixabay.com/photo/2016/03/05/22/01/mbti-1239893_1280.jpg'
                     imageUrl:
-                        'https://via.placeholder.com/300x200', // 여기에 실제 서비스의 대표 이미지 URL을 넣어주세요.
+                        'https://via.placeholder.com/300x200', // 임시 이미지 URL
                     link: {
                         mobileWebUrl: window.location.href,
                         webUrl: window.location.href,
