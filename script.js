@@ -125,31 +125,98 @@ submitButton.addEventListener('click', () => {
         resultContainer.style.display = 'block';
         mbtiResult.textContent = calculatedMBTI;
         mbtiDescription.textContent = mbtiDescriptions[calculatedMBTI] || "MBTI 결과에 대한 설명이 없습니다.";
-    }
-});
+    }const questions = [
+    // 외향(E) vs 내향(I) 지표
+    {
+        question: "주말에 무엇을 하고 싶나요?",
+        options: [
+            { text: "친구들과 파티에서 신나게 놀고 싶어요.", value: "E" },
+            { text: "집에서 조용히 책을 읽거나 영화를 보고 싶어요.", value: "I" }
+        ]
+    },
+    {
+        question: "새로운 사람들과 만날 때, 당신은?",
+        options: [
+            { text: "에너지를 얻고 활기를 느낍니다.", value: "E" },
+            { text: "에너지를 소모하고 피곤함을 느낍니다.", value: "I" }
+        ]
+    },
+    {
+        question: "회의나 그룹 토론에서 당신은?",
+        options: [
+            { text: "주도적으로 의견을 내고 발표하는 것을 좋아합니다.", value: "E" },
+            { text: "다른 사람의 의견을 듣고 신중하게 생각한 후 말하는 편입니다.", value: "I" }
+        ]
+    },
 
-shareButton.addEventListener('click', () => {
-    const currentMBTI = mbtiResult.textContent;
-    const shareText = `내 MBTI는 ${currentMBTI}입니다! MBTI 테스트를 해보세요: ${window.location.href}`;
+    // 감각(S) vs 직관(N) 지표
+    {
+        question: "새로운 프로젝트를 시작할 때, 당신은 주로 어디에 집중하나요?",
+        options: [
+            { text: "현실적인 세부 사항과 실용적인 방법을 봅니다.", value: "S" },
+            { text: "전체적인 그림과 미래의 가능성을 봅니다.", value: "N" }
+        ]
+    },
+    {
+        question: "이야기를 들을 때, 당신은?",
+        options: [
+            { text: "구체적인 사실과 경험을 중요하게 생각합니다.", value: "S" },
+            { text: "숨겨진 의미나 상징, 가능성을 찾으려고 합니다.", value: "N" }
+        ]
+    },
+    {
+        question: "문제를 해결할 때, 당신은?",
+        options: [
+            { text: "과거의 경험이나 현재의 데이터에 기반하여 해결책을 찾습니다.", value: "S" },
+            { text: "직관과 통찰력을 활용하여 새로운 접근 방식을 시도합니다.", value: "N" }
+        ]
+    },
 
-    if (navigator.share) { // Web Share API 지원 여부 확인
-        navigator.share({
-            title: '나의 MBTI는?',
-            text: shareText,
-            url: window.location.href
-        }).then(() => {
-            console.log('성공적으로 공유되었습니다!');
-        }).catch((error) => {
-            console.error('공유 중 오류 발생:', error);
-        });
-    } else {
-        // Web Share API를 지원하지 않는 경우 (예: 데스크톱 브라우저)
-        // 클립보드에 복사하거나 사용자에게 직접 공유하도록 안내
-        navigator.clipboard.writeText(shareText).then(() => {
-            alert('MBTI 정보가 클립보드에 복사되었습니다! 친구들에게 공유해보세요.');
-        }).catch((err) => {
-            console.error('클립보드 복사 실패:', err);
-            prompt('이 내용을 복사하여 공유하세요:', shareText);
-        });
+    // 사고(T) vs 감정(F) 지표
+    {
+        question: "친구가 고민을 털어놓을 때, 당신의 반응은?",
+        options: [
+            { text: "논리적으로 문제 해결 방법을 제시해 줍니다.", value: "T" },
+            { text: "친구의 감정에 공감하고 위로해 줍니다.", value: "F" }
+        ]
+    },
+    {
+        question: "어떤 결정을 내릴 때, 당신은 주로 무엇을 고려하나요?",
+        options: [
+            { text: "객관적인 사실과 논리적 타당성.", value: "T" },
+            { text: "개인의 가치, 사람들과의 관계, 조화.", value: "F" }
+        ]
+    },
+    {
+        question: "비판을 받았을 때, 당신은?",
+        options: [
+            { text: "그 비판이 논리적으로 맞는지 분석하려고 합니다.", value: "T" },
+            { text: "비판하는 사람의 의도나 감정에 더 신경이 쓰입니다.", value: "F" }
+        ]
+    },
+
+    // 판단(J) vs 인식(P) 지표
+    {
+        question: "계획을 세울 때, 당신은 어떤 편인가요?",
+        options: [
+            { text: "계획을 세우고 그에 따라 움직이는 것을 선호합니다.", value: "J" },
+            { text: "자유롭게 상황에 따라 유연하게 대처하는 것을 선호합니다.", value: "P" }
+        ]
+    },
+    {
+        question: "여행을 계획할 때, 당신은?",
+        options: [
+            { text: "구체적인 일정을 미리 세우고 계획대로 따릅니다.", value: "J" },
+            { text: "대략적인 방향만 정하고 즉흥적으로 탐험하는 것을 즐깁니다.", value: "P" }
+        ]
+    },
+    {
+        question: "마감 기한이 다가올 때, 당신은?",
+        options: [
+            { text: "미리미리 준비하여 마감일 전에 끝내는 편입니다.", value: "J" },
+            { text: "마감 기한이 임박해서야 본격적으로 시작하는 편입니다.", value: "P" }
+        ]
     }
-});
+];
+
+// ... (이후의 mbtiDescriptions 객체와 모든 함수 코드는 동일합니다) ...

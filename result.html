@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial="1.0">
+    <title>MBTI 검사 결과</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>나의 MBTI 유형은?</h1>
+        <h2 id="mbti-type"></h2>
+        <p id="mbti-description"></p>
+        <button id="share-btn" class="btn">결과 공유하기</button>
+        <p id="share-link-display" style="display: none; margin-top: 20px;">
+            공유 링크: <input type="text" id="share-link-input" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            <button id="copy-btn" class="btn" style="margin-left: 10px;">복사</button>
+        </p>
+        <a href="index.html" class="btn home-btn">다시 검사하기</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
