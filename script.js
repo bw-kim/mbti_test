@@ -77,7 +77,7 @@ const mbtiTypes = {
     },
     "ISTP": {
         name: "만능 재주꾼",
-        description: "호기심 많고 실용적인 문제 해결사, 기계나 도구를 다루는 데 능숙합니다."
+        description: "호기택심 많고 실용적인 문제 해결사, 기계나 도구를 다루는 데 능숙합니다."
     },
     "ISFP": {
         name: "자유로운 영혼",
@@ -132,7 +132,7 @@ if (document.getElementById('quiz-container')) {
     const answers = { E: 0, I: 0, N: 0, S: 0, T: 0, F: 0, J: 0, P: 0 };
     let selectedOptionType = null; // 현재 질문에서 선택된 옵션의 유형을 저장
 
-    const startQuizButton = document.getElementById('start-quiz-btn'); // 추가된 시작 버튼
+    const startQuizButton = document.getElementById('start-quiz-btn');
     const quizContainer = document.getElementById('quiz-container');
     const nextButton = document.getElementById('next-btn');
     const submitButton = document.getElementById('submit-btn');
@@ -153,8 +153,7 @@ if (document.getElementById('quiz-container')) {
                 button.addEventListener('click', (e) => {
                     optionButtons.forEach(btn => btn.classList.remove('selected'));
                     e.target.classList.add('selected');
-                    selectedOptionType = e.target.dataset.type; // 선택된 유형 저장
-                    // 옵션 선택 시 다음 또는 결과 보기 버튼 표시
+                    selectedOptionType = e.target.dataset.type;
                     if (currentQuestionIndex < questions.length - 1) {
                         nextButton.style.display = 'block';
                         submitButton.style.display = 'none';
@@ -164,9 +163,9 @@ if (document.getElementById('quiz-container')) {
                     }
                 });
             });
-            nextButton.style.display = 'none'; // 다음 버튼 초기화
-            submitButton.style.display = 'none'; // 제출 버튼 초기화
-            selectedOptionType = null; // 선택된 옵션 초기화
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'none';
+            selectedOptionType = null;
         } else {
             // 모든 질문 완료 (이 부분은 submit-btn이 처리하므로 사실상 도달하지 않음)
         }
@@ -174,7 +173,7 @@ if (document.getElementById('quiz-container')) {
 
     function goToNextQuestion() {
         if (selectedOptionType) {
-            answers[selectedOptionType]++; // 선택된 유형의 카운트 증가
+            answers[selectedOptionType]++;
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
                 displayQuestion();
@@ -193,26 +192,24 @@ if (document.getElementById('quiz-container')) {
         mbti += (answers.T >= answers.F) ? "T" : "F";
         mbti += (answers.J >= answers.P) ? "J" : "P";
 
-        // 결과 페이지로 리디렉션하며 MBTI 유형을 URL 매개변수로 전달
         window.location.href = `result.html?mbti=${mbti}`;
     }
 
     nextButton.addEventListener('click', goToNextQuestion);
     submitButton.addEventListener('click', calculateResultAndRedirect);
 
-    // START 버튼 클릭 시 동작 추가
     startQuizButton.addEventListener('click', () => {
-        startQuizButton.style.display = 'none'; // 시작 버튼 숨기기
-        quizContainer.style.display = 'block'; // 퀴즈 컨테이너 보이기
-        displayQuestion(); // 첫 질문 로드
+        startQuizButton.style.display = 'none';
+        quizContainer.style.display = 'block';
+        displayQuestion();
     });
 }
 
 
 // result.html에서 실행되는 코드
 if (document.getElementById('mbti-type')) {
-    // Kakao SDK 초기화
-    Kakao.init('e748b5d17d231ca36365d1c6498e8327'); // 여기에 카카오 자바스크립트 키를 넣어주세요
+    // Kakao SDK 초기화 - 앱 키를 이곳에 직접 입력합니다.
+    Kakao.init('e748b5d17d231ca36365d1c6498e8327');
 
     const urlParams = new URLSearchParams(window.location.search);
     const mbti = urlParams.get('mbti');
@@ -220,12 +217,12 @@ if (document.getElementById('mbti-type')) {
     const mbtiTypeElement = document.getElementById('mbti-type');
     const mbtiDescriptionElement = document.getElementById('mbti-description');
     const shareButton = document.getElementById('share-btn');
-    const kakaoShareButton = document.getElementById('kakao-share-btn'); // Kakao 공유 버튼
+    const kakaoShareButton = document.getElementById('kakao-share-btn');
     const shareLinkDisplay = document.getElementById('share-link-display');
     const shareLinkInput = document.getElementById('share-link-input');
     const copyButton = document.getElementById('copy-btn');
 
-    let currentMbtiTypeInfo = null; // 현재 MBTI 정보를 저장할 변수
+    let currentMbtiTypeInfo = null;
 
     if (mbti && mbtiTypes[mbti]) {
         currentMbtiTypeInfo = mbtiTypes[mbti];
@@ -237,18 +234,17 @@ if (document.getElementById('mbti-type')) {
     }
 
     shareButton.addEventListener('click', () => {
-        const shareUrl = window.location.origin + `/result.html?mbti=${mbti}`; // 현재 도메인과 쿼리 파라미터 조합
+        const shareUrl = window.location.origin + `/result.html?mbti=${mbti}`;
         shareLinkInput.value = shareUrl;
         shareLinkDisplay.style.display = 'block';
 
-        // 자동으로 링크를 선택 (모바일에서는 작동하지 않을 수 있음)
         shareLinkInput.select();
-        shareLinkInput.setSelectionRange(0, 99999); // 모바일용
+        shareLinkInput.setSelectionRange(0, 99999);
     });
 
     copyButton.addEventListener('click', () => {
         shareLinkInput.select();
-        shareLinkInput.setSelectionRange(0, 99999); // 모바일용
+        shareLinkInput.setSelectionRange(0, 99999);
         try {
             document.execCommand('copy');
             alert('링크가 클립보드에 복사되었습니다!');
@@ -258,7 +254,6 @@ if (document.getElementById('mbti-type')) {
         }
     });
 
-    // Kakao 공유 버튼 클릭 이벤트
     kakaoShareButton.addEventListener('click', () => {
         if (currentMbtiTypeInfo) {
             Kakao.Share.sendDefault({
@@ -266,10 +261,8 @@ if (document.getElementById('mbti-type')) {
                 content: {
                     title: `나의 MBTI 유형은 ${mbti} - ${currentMbtiTypeInfo.name}!`,
                     description: currentMbtiTypeInfo.description,
-                    // TODO: 여기에 실제 서비스의 대표 이미지 URL을 넣어주세요.
-                    // 예시 이미지 URL: 'https://cdn.pixabay.com/photo/2016/03/05/22/01/mbti-1239893_1280.jpg'
                     imageUrl:
-                        'https://via.placeholder.com/300x200', // 임시 이미지 URL
+                        'https://via.placeholder.com/300x200', // 여기에 실제 서비스의 대표 이미지 URL을 넣어주세요.
                     link: {
                         mobileWebUrl: window.location.href,
                         webUrl: window.location.href,
